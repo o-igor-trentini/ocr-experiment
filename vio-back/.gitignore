@@ -1,0 +1,7 @@
+__debug_bin
+.vscode
+.env
+main
+main.exe
+localhost.pem
+localhost-key.pem
