@@ -12,6 +12,7 @@ type Vio struct {
 	CatHabilitacao            string
 	NumRegistro               string
 	Validade                  string
+	PrimHabilitacao           string
 	Observacoes               string
 	Local                     string
 	Uf                        string

@@ -35,7 +35,6 @@ func NewService(ocrRepository Repository) Service {
 func (s serviceImpl) ConvertBase64ToStruct(b64 []models.ImgB64) (models.Vio, vioerror.ResponseError) {
 	toStruct := models.Vio{}
 
-	var texts []string
 	for i, value := range b64 {
 		text, err := s.getTextInImage(value.B64)
 		if err != nil {
@@ -54,12 +53,7 @@ func (s serviceImpl) ConvertBase64ToStruct(b64 []models.ImgB64) (models.Vio, vio
 			fmt.Print("mais de duas imagens foram recebidas")
 			return toStruct, nil
 		}
-
-		texts = append(texts, text)
 	}
-
-	// helpers.ClearTerminal()
-	// fmt.Print(texts)
 
 	// quando pegar o base64, separar o que tem na string antes do ACC, lógica inversa no segundo base64
 
@@ -141,6 +135,8 @@ func (s serviceImpl) clearAndConvertFirstText(text string, toStruct *models.Vio)
 	// removendo texto desnecessário
 	text = text[strings.Index(text, string(appconst.Nome)):]
 
+	textLen := len(text)
+
 	helpers.ClearTerminal()
 	fmt.Println(text)
 
@@ -175,8 +171,8 @@ func (s serviceImpl) clearAndConvertFirstText(text string, toStruct *models.Vio)
 	fmt.Println(text[iPermissao+len(appconst.Permissao) : iAcc])
 	toStruct.Permissao = text[iPermissao+len(appconst.Permissao) : iAcc]
 
-	fmt.Println(text[iAcc+len(appconst.Acc+"eee"):])
-	toStruct.Acc = text[iAcc+len(appconst.Acc+"eee"):]
+	fmt.Println(text[iAcc+len(appconst.Acc) : textLen-len("eee")])
+	toStruct.Acc = text[iAcc+len(appconst.Acc) : textLen-len("eee")]
 }
 
 func (s serviceImpl) clearAndConvertSecondText(text string, toStruct *models.Vio) {
@@ -187,13 +183,50 @@ func (s serviceImpl) clearAndConvertSecondText(text string, toStruct *models.Vio
 	// removendo texto desnecessário
 	text = text[strings.Index(text, string(appconst.CatHabilitacao)):]
 
+	textLen := len(text)
+
 	// helpers.ClearTerminal()
 	// fmt.Println(text)
 
 	// pegando índices dos campos na string
-	iCatHabilitacao := strings.Index(text, string(appconst.CatHabilitacao))
+	iCatHab := strings.Index(text, string(appconst.CatHabilitacao))
 	iNumRegistro := strings.Index(text, string(appconst.NumRegistro))
+	iValidade := strings.Index(text, string(appconst.Validade))
+	iPrimHab := strings.Index(text, string(appconst.PrimHabilitacao))
+	iObs := strings.Index(text, string(appconst.Observacoes))
+	iLocal := strings.Index(text, string(appconst.Local))
+	iUf := strings.Index(text, string(appconst.Uf))
+	iEmissao := strings.Index(text, string(appconst.DataEmissao))
+	iNumValidacaoCnh := strings.Index(text, string(appconst.NumValidacaoCnh))
+	iNumFormRenach := strings.Index(text, string(appconst.NumFormRenach))
 
-	fmt.Println(text[iCatHabilitacao+len("Cat. Hab.") : iNumRegistro])
-	toStruct.CatHabilitacao = text[iCatHabilitacao+len("Cat. Hab.") : iNumRegistro]
+	fmt.Println(text[iCatHab+len("Cat. Hab.") : iNumRegistro])
+	toStruct.CatHabilitacao = text[iCatHab+len("Cat. Hab.") : iNumRegistro]
+
+	fmt.Println(text[iNumRegistro+len("N° Registro") : iValidade])
+	toStruct.NumRegistro = text[iNumRegistro+len("N° Registro") : iValidade]
+
+	fmt.Println(text[iValidade+len(appconst.Validade) : iPrimHab-len("cao")])
+	toStruct.Validade = text[iValidade+len(appconst.Validade) : iPrimHab-len("cao")]
+
+	fmt.Println(text[iPrimHab+len("1a Habilita") : iObs])
+	toStruct.PrimHabilitacao = text[iPrimHab+len("1a Habilita") : iObs]
+
+	fmt.Println(text[iObs+len("Observacoess") : iLocal])
+	toStruct.Observacoes = text[iObs+len("Observacoess") : iLocal]
+
+	fmt.Println(text[iLocal+len(appconst.Local) : iUf])
+	toStruct.Local = text[iLocal+len(appconst.Local) : iUf]
+
+	fmt.Println(text[iUf+len(appconst.Uf) : iEmissao-len("Data de ")])
+	toStruct.Uf = text[iUf+len(appconst.Uf) : iEmissao-len("Data de ")]
+
+	fmt.Println(text[iEmissao+len(appconst.DataEmissao) : iNumValidacaoCnh-len("Numero validacao  ")])
+	toStruct.DataEmissao = text[iEmissao+len(appconst.DataEmissao) : iNumValidacaoCnh-len("Numero validacao  ")]
+
+	fmt.Println(text[iNumValidacaoCnh+len(appconst.NumValidacaoCnh) : iNumFormRenach-len("Numero Formulario ")])
+	toStruct.NumValidacaoCnh = text[iNumValidacaoCnh+len(appconst.NumValidacaoCnh) : iNumFormRenach-len("Numero Formulario ")]
+
+	fmt.Println(text[iNumFormRenach+len(appconst.NumFormRenach) : textLen-len("eee")])
+	toStruct.NumFormRenach = text[iNumFormRenach+len(appconst.NumFormRenach) : textLen-len("eee")]
 }

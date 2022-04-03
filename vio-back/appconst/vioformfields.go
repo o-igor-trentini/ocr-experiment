@@ -12,12 +12,13 @@ const (
 	Permissao                 VioFormFields = "Permissao"
 	Acc                       VioFormFields = "ACC"
 	CatHabilitacao            VioFormFields = "Cat." // Hab.
-	NumRegistro               VioFormFields = "N°"   // Registro
+	NumRegistro               VioFormFields = "N°"   // N° Registro
 	Validade                  VioFormFields = "Validade"
-	Observacoes               VioFormFields = "Observacoes"
+	PrimHabilitacao           VioFormFields = "Habilita" // 1a Habilitacao
+	Observacoes               VioFormFields = "Observa"  // Observacoes
 	Local                     VioFormFields = "Local"
 	Uf                        VioFormFields = "UF"
-	DataEmissao               VioFormFields = "Data de Emissao"
-	NumValidacaoCnh           VioFormFields = "Número Validacao CNH"
-	NumFormRenach             VioFormFields = "Número Formulario RENACH"
+	DataEmissao               VioFormFields = "Emissao" // Data de Emissao
+	NumValidacaoCnh           VioFormFields = "CNH"     // Numero Validacao CNH
+	NumFormRenach             VioFormFields = "RENACH"  // Numero Formulario RENACH
 )
