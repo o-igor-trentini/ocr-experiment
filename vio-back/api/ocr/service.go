@@ -12,6 +12,7 @@ import (
 	"vio-back/appconst"
 	"vio-back/helpers"
 	"vio-back/models"
+	"vio-back/services"
 	"vio-back/services/vioerror"
 
 	"github.com/otiai10/gosseract"
@@ -29,9 +30,6 @@ func NewService(ocrRepository Repository) Service {
 	return &serviceImpl{ocrRepository}
 }
 
-// if err := s.ocrRepository.Create(newLink); err != nil {
-// 	return encerror.NewError(services.ErrGenerateLink, services.ErrGenerateLinkMsg, nil)
-// }
 func (s serviceImpl) ConvertBase64ToStruct(b64 []models.ImgB64) (models.Vio, vioerror.ResponseError) {
 	toStruct := models.Vio{}
 
@@ -39,7 +37,7 @@ func (s serviceImpl) ConvertBase64ToStruct(b64 []models.ImgB64) (models.Vio, vio
 		text, err := s.getTextInImage(value.B64)
 		if err != nil {
 			fmt.Printf("erro ao converter as imagens; erro: %s", err)
-			return toStruct, nil
+			return toStruct, vioerror.NewError(services.ErrConvertBase64ToStruct, services.ErrConvertBase64ToStructMsg, nil)
 		}
 
 		switch i {
@@ -54,8 +52,6 @@ func (s serviceImpl) ConvertBase64ToStruct(b64 []models.ImgB64) (models.Vio, vio
 			return toStruct, nil
 		}
 	}
-
-	// quando pegar o base64, separar o que tem na string antes do ACC, lógica inversa no segundo base64
 
 	return toStruct, nil
 }

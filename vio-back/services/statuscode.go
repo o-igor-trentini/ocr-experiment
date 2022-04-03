@@ -3,5 +3,5 @@ package services
 type StatusCode uint64
 
 const (
-	ErrGenerateLink StatusCode = 1
+	ErrConvertBase64ToStruct StatusCode = 1
 )
