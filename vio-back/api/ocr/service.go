@@ -36,8 +36,7 @@ func (s serviceImpl) ConvertBase64ToStruct(b64 []models.ImgB64) (models.Vio, vio
 	for i, value := range b64 {
 		text, err := s.getTextInImage(value.B64)
 		if err != nil {
-			fmt.Printf("erro ao converter as imagens; erro: %s", err)
-			return toStruct, vioerror.NewError(services.ErrConvertBase64ToStruct, services.ErrConvertBase64ToStructMsg, nil)
+			return toStruct, vioerror.NewError(services.ErrConvertBase64ToStruct, services.ErrConvertBase64ToStructMsg, err.GetCause())
 		}
 
 		switch i {
@@ -48,43 +47,42 @@ func (s serviceImpl) ConvertBase64ToStruct(b64 []models.ImgB64) (models.Vio, vio
 			s.clearAndConvertSecondText(text, &toStruct)
 
 		default:
-			fmt.Print("mais de duas imagens foram recebidas")
-			return toStruct, nil
+			return toStruct, vioerror.NewError(services.ErrExceededImgLimit, services.ErrExceededImgLimitMsg, nil)
 		}
 	}
 
 	return toStruct, nil
 }
 
-func (s serviceImpl) convertBase64ToImage(b64 string) (*image.Image, error) {
+func (s serviceImpl) convertBase64ToImage(b64 string) (*image.Image, vioerror.ResponseError) {
 	coI := strings.Index(b64, ",")
 	rawImage := b64[coI+1:]
 
 	unbased, err := base64.StdEncoding.DecodeString(rawImage)
 	if err != nil {
-		return nil, fmt.Errorf("erro: %s", err)
+		return nil, vioerror.NewError(services.ErrConvertBase64ToImage, services.ErrConvertBase64ToImageMsg, err)
 	}
 
 	res := bytes.NewReader(unbased)
 	jpgImg, errConvert := jpeg.Decode(res)
 	if errConvert != nil {
-		return nil, fmt.Errorf("erro: %s", errConvert)
+		return nil, vioerror.NewError(services.ErrConvertBase64ToImage, services.ErrConvertBase64ToImageMsg, errConvert)
 	}
 
 	return &jpgImg, nil
 }
 
-func (s serviceImpl) getImageBytes(jpg *image.Image) (*bytes.Buffer, error) {
+func (s serviceImpl) getImageBytes(jpg *image.Image) (*bytes.Buffer, vioerror.ResponseError) {
 	if jpg == nil {
-		imgfile, err := os.Open("/home/igor/projetos/pessoal/vio/vio-back/images/frase.jpg")
+		imgfile, err := os.Open("caminho da imagem")
 		if err != nil {
-			return &bytes.Buffer{}, fmt.Errorf("erro: %s", err)
+			return nil, vioerror.NewError(services.ErrConvertImageToBytes, services.ErrConvertImageToBytesMsg, err)
 		}
 		defer imgfile.Close()
 
 		img, errDecode := jpeg.Decode(imgfile)
 		if errDecode != nil {
-			return &bytes.Buffer{}, fmt.Errorf("erro: %s", errDecode)
+			return nil, vioerror.NewError(services.ErrConvertImageToBytes, services.ErrConvertImageToBytesMsg, errDecode)
 		}
 
 		jpg = &img
@@ -93,31 +91,31 @@ func (s serviceImpl) getImageBytes(jpg *image.Image) (*bytes.Buffer, error) {
 	buf := bytes.NewBuffer(nil)
 
 	if err := png.Encode(buf, *jpg); err != nil {
-		return &bytes.Buffer{}, fmt.Errorf("erro: %s", err)
+		return nil, vioerror.NewError(services.ErrConvertImageToBytes, services.ErrConvertImageToBytesMsg, err)
 	}
 
 	return buf, nil
 }
 
-func (s serviceImpl) getTextInImage(b64 string) (string, error) {
+func (s serviceImpl) getTextInImage(b64 string) (string, vioerror.ResponseError) {
 	ocr := gosseract.NewClient()
 	defer ocr.Close()
 
 	img, errConvert := s.convertBase64ToImage(b64)
 	if errConvert != nil {
-		fmt.Printf("erro: %s", errConvert)
+		return "", vioerror.NewError(services.ErrConvertBytesToText, services.ErrConvertBytesToTextMsg, errConvert.GetCause())
 	}
 
 	imgBytes, errImgBytes := s.getImageBytes(img)
 	if errImgBytes != nil {
-		fmt.Print(errImgBytes)
+		return "", vioerror.NewError(services.ErrConvertBytesToText, services.ErrConvertBytesToTextMsg, errImgBytes.GetCause())
 	}
 
 	ocr.SetImageFromBytes(imgBytes.Bytes())
 
 	text, errToText := ocr.Text()
 	if errToText != nil {
-		fmt.Print(errToText)
+		return "", vioerror.NewError(services.ErrConvertBytesToText, services.ErrConvertBytesToTextMsg, errToText)
 	}
 
 	return text, nil
