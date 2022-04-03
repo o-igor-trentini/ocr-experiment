@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"vio-back/api/ocr"
+	"vio-back/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,20 +17,19 @@ func Links(ocrService ocr.Service) OCRController {
 }
 
 func (co OCRController) ToText(c *gin.Context) {
-	type imgB64 struct {
-		B64 string `json:"img_base64"`
-	}
-
-	var b64 []imgB64
+	var b64 []models.ImgB64
 	if err := c.ShouldBindJSON(&b64); err != nil {
 		fmt.Printf("erro: %s", err)
 		return
 	}
 
-	if err := co.ocrService.ConvertBase64ToStruct(b64[0].B64); err != nil {
+	toStruct, err := co.ocrService.ConvertBase64ToStruct(b64)
+	if err != nil {
 		fmt.Print("deu ruim")
 		return
 	}
+
+	fmt.Print(toStruct)
 
 	c.JSON(200, "deu boa")
 }
