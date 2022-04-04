@@ -5,6 +5,9 @@ $ go get
 # Inicializando OCR do golang
 $ docker run -it --rm otiai10/gosseract
 
+# Sair do terminal do docker
+$ exit
+
 # Corrigindo erro
 $ apt-cache search tesseract | grep dev
 $ sudo apt-get install libtesseract-dev
