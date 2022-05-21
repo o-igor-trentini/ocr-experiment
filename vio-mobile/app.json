@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "vio-mobile",
-    "slug": "vio-mobile",
+    "name": "fw-mobile",
+    "slug": "fw-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

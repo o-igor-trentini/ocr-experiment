@@ -1,40 +1,51 @@
 module.exports = {
-    env: {
-        browser: true,
-        es2021: true,
-    },
-    extends: [
-        'eslint:recommended',
-        'plugin:react/recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:prettier/recommended',
-    ],
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-        ecmaFeatures: {
-            jsx: true,
-        },
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-    },
-    plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
-    rules: {
-        // indent: ['error', 'tab'],
-        'linebreak-style': ['error', 'unix'],
-        quotes: ['error', 'single'],
-        semi: ['error', 'always'],
-        'no-else-return': 'error',
-        'react/jsx-uses-react': 'off',
-        'react/react-in-jsx-scope': 'off',
-        // 'import/no-unresolved': 'error',
-        // "import/no-unresolved": [
-        //     2,
-        //     { "caseSensitive": false }
-        // ]
-    },
-    settings: {
-        'import/resolver': {
-            typescript: {},
-        },
-    },
+	env: {
+		'es2021': true,
+		'node': true
+	},
+	extends: [
+		'eslint:recommended',
+		'plugin:react/recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:react-hooks/recommended',
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:@typescript-eslint/recommended-requiring-type-checking'
+	],
+	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		'ecmaFeatures': {
+			'jsx': true
+		},
+		'ecmaVersion': 'latest',
+		'sourceType': 'module'
+	},
+	plugins: [
+		'react',
+		'@typescript-eslint',
+		'react-hooks',
+		'prettier'
+	],
+	rules: {
+		// 'indent': [
+		// 	'error',
+		// 	'tab'
+		// ],
+		'linebreak-style': [
+			'error',
+			'unix'
+		],
+		'quotes': [
+			'error',
+			'single'
+		],
+		'semi': [
+			'error',
+			'always'
+		],
+		'prettier/prettier': 'error',
+		'no-empty-function': 'off',
+		'@typescript-eslint/no-empty-function': 'off',
+		'react/display-name': 'off',
+		'react/prop-types': 'off'
+	}
 };

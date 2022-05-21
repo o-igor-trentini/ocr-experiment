@@ -19,13 +19,14 @@ func Links(ocrService ocr.Service) OCRController {
 func (co OCRController) ToText(c *gin.Context) {
 	var b64 []models.ImgB64
 	if err := c.ShouldBindJSON(&b64); err != nil {
+		c.JSON(500, "deu ruim")
 		fmt.Printf("erro: %s", err)
 		return
 	}
 
 	toStruct, err := co.ocrService.ConvertBase64ToStruct(b64)
 	if err != nil {
-		fmt.Print("deu ruim")
+		c.JSON(500, "deu ruim")
 		return
 	}
 
