@@ -1,25 +1,46 @@
-import 'react-native-gesture-handler';
-
-import { Inter_400Regular, Inter_500Medium, useFonts } from '@expo-google-fonts/inter';
-import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Widget } from './src/components/Widget';
+import { GetImagesButton } from './src/components/Widget';
 import { theme } from './src/theme';
 
-const App: FC = () => {
-    // const [fontsLoaded] = useFonts({ Inter_400Regular, Inter_500Medium });
+import * as fs from 'expo-file-system';
 
-    // if (!fontsLoaded) return <AppLoading />;
+const App: FC = () => {
+    const [img, setImg] = useState<string>('Valor inicial');
+
+    const onPress = () => {
+        const docDir = fs.documentDirectory as string;
+        const localFile = `${docDir}`;
+
+        console.log('### localFile: ', localFile);
+
+        fs.StorageAccessFramework.readDirectoryAsync(localFile)
+            .then((data) => {
+                console.log('\n\n### data: ', data);
+                console.log('\n\n### data length: ', data.length);
+
+                data.forEach((item, index) => {
+                    console.log(`\n\nindex: ${index}`);
+                    console.log(item);
+                });
+
+                setImg;
+                // const base64 = 'data:image/jpg;base64' + data;
+                // setImg(base64)
+            })
+            .catch((err) => {
+                console.log('### getImgError: ', err);
+            });
+    };
 
     return (
         <View style={styles.container}>
             <StatusBar style="light" backgroundColor="transparent" translucent />
 
-            <Text style={{ color: '#000' }}>Qualquer coisa</Text>
+            <Text style={{ color: '#fff' }}>{img}</Text>
 
-            <Widget />
+            <GetImagesButton onPress={onPress} />
         </View>
     );
 };
