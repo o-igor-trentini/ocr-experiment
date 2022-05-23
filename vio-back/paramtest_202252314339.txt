@@ -1,0 +1,45 @@
+[br.gov.serpro.lince:id/client_name] -> SENATRAN
+[br.gov.serpro.lince:id/feedback_bt_dismiss] -> Dismiss
+[br.gov.serpro.lince:id/feedback_bt_negative] -> NO
+[br.gov.serpro.lince:id/feedback_bt_positive] -> YES
+[br.gov.serpro.lince:id/feedback_title] -> Are you liking it of the VIO?
+[br.gov.serpro.lince:id/field_label] -> Nome
+[br.gov.serpro.lince:id/field_label$2] -> Doc. Identidade/Órg. Emissor/UF
+[br.gov.serpro.lince:id/field_label$3] -> CPF
+[br.gov.serpro.lince:id/field_label$4] -> Data de Nascimento
+[br.gov.serpro.lince:id/field_label$5] -> Filiação Pai
+[br.gov.serpro.lince:id/field_label$6] -> Filiação Mãe
+[br.gov.serpro.lince:id/field_label$7] -> Permissão
+[br.gov.serpro.lince:id/field_label$8] -> ACC
+[br.gov.serpro.lince:id/field_label$9] -> Cat. Hab.
+[br.gov.serpro.lince:id/field_label$10] -> Nº Registro
+[br.gov.serpro.lince:id/field_label$11] -> Validade
+[br.gov.serpro.lince:id/field_label$12] -> 1ª Habilitação
+[br.gov.serpro.lince:id/field_label$13] -> Observações
+[br.gov.serpro.lince:id/field_label$14] -> Local
+[br.gov.serpro.lince:id/field_label$15] -> UF
+[br.gov.serpro.lince:id/field_label$16] -> Data de Emissão
+[br.gov.serpro.lince:id/field_label$17] -> Número Validação CNH
+[br.gov.serpro.lince:id/field_label$18] -> Número Formulário RENACH
+[br.gov.serpro.lince:id/field_value] -> VINICIUS BERNARDO HARTMANN
+[br.gov.serpro.lince:id/field_value$2] -> 7051666 SSP SC
+[br.gov.serpro.lince:id/field_value$3] -> 107.649.759-43
+[br.gov.serpro.lince:id/field_value$4] -> 31/01/2004
+[br.gov.serpro.lince:id/field_value$5] -> EDSON JOSE HARTMANN
+[br.gov.serpro.lince:id/field_value$6] -> VALERIA BRITO BERNARDO HARTMANN
+[br.gov.serpro.lince:id/field_value$7] -> PERMISSAO
+[br.gov.serpro.lince:id/field_value$8] -> AB
+[br.gov.serpro.lince:id/field_value$9] -> 07794556174
+[br.gov.serpro.lince:id/field_value$10] -> 10/04/2023
+[br.gov.serpro.lince:id/field_value$11] -> 11/04/2022
+[br.gov.serpro.lince:id/field_value$12] -> 99
+[br.gov.serpro.lince:id/field_value$13] -> FLORIANOPOLIS
+[br.gov.serpro.lince:id/field_value$14] -> SC
+[br.gov.serpro.lince:id/field_value$15] -> 11/04/2022
+[br.gov.serpro.lince:id/field_value$16] -> 36219349385
+[br.gov.serpro.lince:id/field_value$17] -> SC172743303
+[br.gov.serpro.lince:id/menu_info] -> About this document
+[br.gov.serpro.lince:id/person_picture] -> Photo
+[br.gov.serpro.lince:id/template_name] -> CNH
+[index:7] -> Navigate up
+[index:8] -> Detailing
